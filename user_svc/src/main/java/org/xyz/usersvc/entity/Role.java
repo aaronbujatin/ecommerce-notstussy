@@ -2,7 +2,6 @@ package org.xyz.usersvc.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.xyz.usersvc.RoleName;
 
 @Data
 @Entity

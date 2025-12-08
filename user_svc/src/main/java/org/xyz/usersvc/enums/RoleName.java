@@ -1,4 +1,4 @@
-package org.xyz.usersvc;
+package org.xyz.usersvc.enums;
 
 public enum RoleName {
     ROLE_USER,

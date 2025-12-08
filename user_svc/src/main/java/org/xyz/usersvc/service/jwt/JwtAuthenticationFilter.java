@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.xyz.usersvc.entity.Customer;
 import org.xyz.usersvc.repository.CustomerRepository;
+import org.xyz.usersvc.service.customer.CustomerUserDetails;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (userEmail != null && authentication == null) {
 
-                Customer customer = (Customer) userDetailsService.loadUserByUsername(userEmail);
+                CustomerUserDetails customer = (CustomerUserDetails) userDetailsService.loadUserByUsername(userEmail);
 
                 if (jwtService.isTokenValid(jwt, customer)) {
                     UsernamePasswordAuthenticationToken authToken =

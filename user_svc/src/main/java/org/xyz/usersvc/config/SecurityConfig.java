@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.xyz.usersvc.entity.Customer;
 import org.xyz.usersvc.repository.CustomerRepository;
+import org.xyz.usersvc.service.customer.CustomerUserDetailService;
 import org.xyz.usersvc.service.jwt.JwtAuthenticationFilter;
 
 import java.util.Set;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CustomerRepository customerRepository;
+    private final CustomerUserDetailService customerUserDetailService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -53,11 +54,11 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        return email ->  customerRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("email not found"));
-    }
+//    @Bean
+//    UserDetailsService userDetailsService() {
+//        return email ->  customerRepository.findByEmail(email)
+//                    .orElseThrow(() -> new UsernameNotFoundException("email not found"));
+//    }
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
@@ -71,7 +72,7 @@ public class SecurityConfig {
 
     @Bean
     AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService());
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(customerUserDetailService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }

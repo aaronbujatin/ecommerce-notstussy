@@ -1,40 +1,29 @@
 package org.xyz.usersvc.service.customer;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.xyz.usersvc.entity.Role;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
+public record CustomerUserDetails(String email, String passwordHash, Set<Role> roles) implements UserDetails {
 
-public class CustomerUserDetails implements UserDetails {
-
-    private final String email;
-    private final String password;
-    private final List<String> roles;
-
-
-    public CustomerUserDetails(User user) {
-        email = user.getUsername(),
-        password = user.getPassword(),
-        roles = user.getAuthorities()
-                .stream().map()
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return passwordHash;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 }
