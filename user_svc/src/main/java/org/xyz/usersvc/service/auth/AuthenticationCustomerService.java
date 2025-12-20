@@ -41,14 +41,16 @@ public class AuthenticationCustomerService {
             throw new BadRequestException(String.format("email %s already exist", registerCustomerRequest.email()));
         }
 
-        Customer customer = new Customer();
-        customer.setEmail(registerCustomerRequest.email());
-        customer.setPassword(passwordEncoder.encode(registerCustomerRequest.password()));
-        customer.setFirstName(registerCustomerRequest.firstName());
-        customer.setLastName(registerCustomerRequest.lastName());
-        customer.setPhone(registerCustomerRequest.phone());
-        customer.setRequestStringify(objectMapper.writeValueAsString(registerCustomerRequest));
-        customer.setRoles(defaultCustomerRoles());
+        Customer customer = Customer.builder()
+                .email(registerCustomerRequest.email())
+                .password(passwordEncoder.encode(registerCustomerRequest.password()))
+                .firstName(registerCustomerRequest.firstName())
+                .lastName(registerCustomerRequest.lastName())
+                .phone(registerCustomerRequest.phone())
+                .requestStringify(objectMapper.writeValueAsString(registerCustomerRequest))
+                .roles(defaultCustomerRoles())
+                .build();
+
         customerRepository.save(customer);
     }
 
@@ -71,7 +73,7 @@ public class AuthenticationCustomerService {
 
 
     private Set<Role> defaultCustomerRoles() {
-        Long ROLE_USER_ID = 1L;
+        Long ROLE_USER_ID = 2L;
         Role role = roleRepository.findById(ROLE_USER_ID)
                 .orElseThrow(ResourceNotFoundException::new);
 

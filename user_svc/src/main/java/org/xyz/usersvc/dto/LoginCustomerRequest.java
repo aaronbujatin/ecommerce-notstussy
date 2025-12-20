@@ -9,11 +9,11 @@ public record LoginCustomerRequest(
         String password
 ) {
 
-    public LoginCustomerRequest {
-
-        if (email.isBlank() || email.isEmpty() || email == null) {
-            throw ValidationRequestException("valid email is required.")
-        }
-
-    }
+//    public LoginCustomerRequest {
+//
+//        if (email.isBlank() || email.isEmpty() || email == null) {
+//            throw ValidationRequestException("valid email is required.")
+//        }
+//
+//    }
 }

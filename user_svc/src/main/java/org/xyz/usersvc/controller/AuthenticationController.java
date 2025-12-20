@@ -5,13 +5,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.xyz.usersvc.dto.CustomerInfoResp;
 import org.xyz.usersvc.dto.LoginCustomerRequest;
 import org.xyz.usersvc.dto.LoginTokenResponse;
 import org.xyz.usersvc.dto.RegisterCustomerRequest;
+import org.xyz.usersvc.exception.ResourceNotFoundException;
+import org.xyz.usersvc.repository.CustomerRepository;
 import org.xyz.usersvc.service.auth.AuthenticationCustomerService;
 
 @RequiredArgsConstructor
@@ -19,8 +19,9 @@ import org.xyz.usersvc.service.auth.AuthenticationCustomerService;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    private final AuthenticationCustomerService authenticationCustomerService;
 
+    private final CustomerRepository customerRepository;
+    private final AuthenticationCustomerService authenticationCustomerService;
 
     @PostMapping("/signup")
     public ResponseEntity<String> register(@Valid @RequestBody RegisterCustomerRequest registerCustomerRequest) throws BadRequestException, JsonProcessingException {
@@ -31,10 +32,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginTokenResponse> loginAuthenticate(@Valid @RequestBody LoginCustomerRequest loginCustomerRequest) {
-        System.out.println(loginCustomerRequest);
         return ResponseEntity.ok(authenticationCustomerService.loginAuthToken(loginCustomerRequest));
-
-
     }
 
 

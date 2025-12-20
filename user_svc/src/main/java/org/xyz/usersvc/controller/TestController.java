@@ -15,7 +15,7 @@ public class TestController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<String> greet(Authentication authentication){
-        System.out.println("Authorities: " + authentication.getAuthorities());
+
         return ResponseEntity.ok("hello from user endpoint");
     }
 
