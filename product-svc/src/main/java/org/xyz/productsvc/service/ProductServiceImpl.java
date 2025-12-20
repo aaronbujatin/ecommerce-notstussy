@@ -1,6 +1,7 @@
 package org.xyz.productsvc.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.xyz.productsvc.dto.ProductRequest;
 import org.xyz.productsvc.dto.ProductResponse;
@@ -12,6 +13,7 @@ import org.xyz.productsvc.repository.ProductRepository;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -21,20 +23,37 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void createProduct(ProductRequest productRequest) {
+
+        log.info("Creating product with name: {}", productRequest.name());
         productRepository.save(productMapper.mapToProduct(productRequest));
     }
 
     @Override
     public ProductResponse getProductById(Long id) {
+
+        log.info("Getting the product with id of {}", id);
         Product product =  productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ProductErrorInfo.PRODUCT_NOT_FOUND));
 
-        return productMapper.mapToProductResponse(product);
+        ProductResponse productResponse = productMapper.mapToProductResponse(product);
+
+        log.info("Returning the product with id of {} {}", id, productResponse);
+        return productResponse;
     }
 
     @Override
     public List<ProductResponse> getAllProducts() {
-        return List.of();
+        log.info("Getting the list of product");
+
+        List<Product> products = productRepository.findAll();
+
+        List<ProductResponse> productResponses = products
+                .stream()
+                .map(productMapper::mapToProductResponse)
+                .toList();
+
+        log.info("Returning list of products {}", productResponses);
+        return productResponses;
     }
 
 

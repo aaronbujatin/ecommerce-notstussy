@@ -1,10 +1,7 @@
 package org.xyz.productsvc.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity
 @Table(name = "product")
 public class Product {
@@ -42,11 +40,8 @@ public class Product {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-
-
 
 }

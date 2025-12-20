@@ -1,11 +1,14 @@
 package org.xyz.productsvc.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xyz.productsvc.dto.ProductRequest;
 import org.xyz.productsvc.dto.ProductResponse;
 import org.xyz.productsvc.service.ProductService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<String> createProduct(@RequestBody ProductRequest productRequest) {
+    public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
         productService.createProduct(productRequest);
         return ResponseEntity.ok("product successfully saved");
     }
@@ -24,6 +27,12 @@ public class ProductController {
     public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") Long id) {
         ProductResponse productResponse = productService.getProductById(id);
         return ResponseEntity.ok(productResponse);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        List<ProductResponse> productResponses = productService.getAllProducts();
+        return ResponseEntity.ok(productResponses);
     }
 
 

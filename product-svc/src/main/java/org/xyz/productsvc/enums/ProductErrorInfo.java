@@ -5,7 +5,10 @@ import lombok.Getter;
 @Getter
 public enum ProductErrorInfo {
 
-    PRODUCT_NOT_FOUND("PR0404", "Product not found");
+    PRODUCT_NOT_FOUND("PR0404", "Product not found"),
+
+    //EXTERNAL
+    CATEGORY_NOT_FOUND("CT0404", "Category not found");
 
     private final String code;
     private final String message;
