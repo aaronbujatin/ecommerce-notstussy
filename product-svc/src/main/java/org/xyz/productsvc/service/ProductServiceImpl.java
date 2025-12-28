@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService{
         Product product =  productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ProductErrorInfo.PRODUCT_NOT_FOUND));
 
-        ProductResponse productResponse = productMapper.mapToProductResponse(product);
+        ProductResponse productResponse = null;
 
         log.info("Returning the product with id of {} {}", id, productResponse);
         return productResponse;
@@ -43,17 +43,19 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductResponse> getAllProducts() {
-        log.info("Getting the list of product");
+//        log.info("Getting the list of product");
+//
+//        List<Product> products = productRepository.findAll();
+//
+//        List<ProductResponse> productResponses = products
+//                .stream()
+//                .map(productMapper::mapToProductResponse)
+//                .toList();
+//
+//        log.info("Returning list of products {}", productResponses);
+//        return productResponses;
 
-        List<Product> products = productRepository.findAll();
-
-        List<ProductResponse> productResponses = products
-                .stream()
-                .map(productMapper::mapToProductResponse)
-                .toList();
-
-        log.info("Returning list of products {}", productResponses);
-        return productResponses;
+        return null;
     }
 
 

@@ -6,16 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xyz.productsvc.dto.ProductRequest;
 import org.xyz.productsvc.dto.ProductResponse;
+import org.xyz.productsvc.entity.Product;
+import org.xyz.productsvc.repository.ProductRepository;
 import org.xyz.productsvc.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
     @PostMapping
     public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
@@ -33,6 +38,12 @@ public class ProductController {
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
         List<ProductResponse> productResponses = productService.getAllProducts();
         return ResponseEntity.ok(productResponses);
+    }
+
+    @GetMapping("/batch")
+    public ResponseEntity<List<Product>> getAllProductsById(@RequestParam List<Long> ids) {
+
+        return ResponseEntity.ok(productRepository.findAllById(ids));
     }
 
 

@@ -20,6 +20,7 @@ public record ProductRequest(
         @Min(message = "invalid stock", value = 1)
         int stock,
         @NotNull(message = "category id is required")
-        Long categoryId
+        Long categoryId,
+        List<ProductUnitRequest> productUnitRequests
 ) {
 }

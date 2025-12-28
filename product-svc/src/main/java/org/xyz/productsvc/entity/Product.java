@@ -19,22 +19,11 @@ import java.util.List;
 public class Product {
 
     @Id
-    @SequenceGenerator(
-            name = "product_seq",
-            sequenceName = "product_sequence",
-            allocationSize = 1
-
-    )
-    @GeneratedValue(
-            generator = "product_seq",
-            strategy = GenerationType.SEQUENCE
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    private BigDecimal price;
     private List<String> images;
-    private int stock;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -43,5 +32,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductUnit> productUnits;
 
 }

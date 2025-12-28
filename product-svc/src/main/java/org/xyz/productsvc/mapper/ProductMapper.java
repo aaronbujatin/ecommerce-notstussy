@@ -7,9 +7,12 @@ import org.xyz.productsvc.dto.ProductRequest;
 import org.xyz.productsvc.dto.ProductResponse;
 import org.xyz.productsvc.entity.Category;
 import org.xyz.productsvc.entity.Product;
+import org.xyz.productsvc.entity.ProductUnit;
 import org.xyz.productsvc.enums.ProductErrorInfo;
 import org.xyz.productsvc.exception.ResourceNotFoundException;
 import org.xyz.productsvc.repository.CategoryRepository;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,24 +30,31 @@ public class ProductMapper {
                 .builder()
                 .name(productRequest.name())
                 .description(productRequest.description())
-                .price(productRequest.price())
                 .images(productRequest.images())
-                .stock(productRequest.stock())
+                .productUnits(productRequest.productUnitRequests()
+                        .stream()
+                        .map(unit -> ProductUnit.builder()
+                                .productUnitType(unit.productUnitType())
+                                .price(unit.price())
+                                .stock(unit.stock())
+                                .build()
+                        ).toList()
+                )
                 .category(category)
                 .build();
     }
 
-    public ProductResponse mapToProductResponse(Product product){
-
-        return new ProductResponse(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getImages(),
-                product.getStock(),
-                product.getCategory().getName()
-        );
-    }
+//    public ProductResponse mapToProductResponse(Product product){
+//
+//        return new ProductResponse(
+//                product.getId(),
+//                product.getName(),
+//                product.getDescription(),
+//                product.getPrice(),
+//                product.getImages(),
+//                product.getStock(),
+//                product.getCategory().getName()
+//        );
+//    }
 
 }
