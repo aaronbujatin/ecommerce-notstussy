@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Rubik:ital,wght@0,300..900;1,300..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import "tailwindcss";
+@import "flowbite/src/themes/enterprise";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme {
+    --font-shantell: "Shantell Sans", sans-serif;
+    --font-rubik: "Rubik", sans-serif;
+    --font-titillium: "Titillium Web", sans-serif;
+    --font-cabin: "Cabin", sans-serif;
+    --font-lightone: 300;
+}
+
+/* @font-face {
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+} */
