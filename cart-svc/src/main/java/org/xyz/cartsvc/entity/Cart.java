@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.xyz.cartsvc.enums.CartStatus;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString(exclude = "cartItems")
 @Entity
 @Table(name = "CART")
 public class Cart {
@@ -29,20 +31,19 @@ public class Cart {
     )
     private Long id;
     private Long userId;
-    @Enumerated(EnumType.STRING)
-    private CartStatus status;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    private LocalDateTime convertedAt;
     @Builder.Default
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public void addToCart(CartItem cartItem) {
-        cartItems.add(cartItem);
-        cartItem.setCart(this);
+        if (!this.cartItems.contains(cartItem)) {
+            this.cartItems.add(cartItem);
+            cartItem.setCart(this);
+        }
     }
 
     public void removeToCart(CartItem cartItem) {

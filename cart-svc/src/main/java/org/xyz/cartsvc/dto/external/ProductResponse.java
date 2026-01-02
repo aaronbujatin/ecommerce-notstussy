@@ -1,13 +1,14 @@
-package org.xyz.cartsvc.dto;
+package org.xyz.cartsvc.dto.external;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public record ProductClientResponse(
+public record ProductResponse(
         Long id,
         String name,
         int stock,
         List<String> images,
-        BigDecimal price
+        BigDecimal price,
+        List<ProductUnitResponse> productUnits
 ) {
 }

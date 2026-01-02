@@ -2,6 +2,9 @@ package org.xyz.cartsvc.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.xyz.cartsvc.enums.CartItemStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,9 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
 @Entity
+@Getter
+@Setter
+@ToString(exclude = "cart")
 @Table(name = "CART_ITEM")
 public class CartItem {
 
@@ -30,11 +34,16 @@ public class CartItem {
     @JoinColumn(name = "cart_id")
     private Cart cart;
     private Long productId;
+    private Long productUnitId;
     private BigDecimal unitPrice;
     private int quantity;
     private BigDecimal totalPrice;
-    private LocalDateTime addedAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
-
+    @Enumerated(EnumType.STRING)
+    private CartItemStatus status;
+    private LocalDateTime convertedAt;
 
 }

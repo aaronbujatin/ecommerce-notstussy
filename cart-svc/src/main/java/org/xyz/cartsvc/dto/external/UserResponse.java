@@ -1,6 +1,6 @@
-package org.xyz.cartsvc.dto;
+package org.xyz.cartsvc.dto.external;
 
-public record UserClientResponse(
+public record UserResponse(
         Long id
 ) {
 }
